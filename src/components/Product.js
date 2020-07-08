@@ -6,8 +6,8 @@ class Product extends Component {
     render() {
         const { name, price, imgsrc } = this.props.product;
         return (
-            <Link to="/users">
-                <div className="card" style={{ width: '18rem' }}>
+            <Link className="col-md-3" to="/users">
+                <div className="card">
                     <img src={ imgsrc } className="card-img-top" alt= { name } />
                         <div className="card-body">
                             <h5 className="card-title">{ name }</h5>

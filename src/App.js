@@ -11,21 +11,27 @@ class App extends Component {
         products: [
             {
                 id: 0,
-                name: "Ice Tee",
-                price: "99€",
-                imgsrc: "/logo512.png"
+                name: "Fritz-Getränke",
+                price: "1,50 €",
+                imgsrc: "/img/fritz-getraenke.jpg"
             },
             {
                 id: 1,
-                name: "Bier",
-                price: "99€",
-                imgsrc: "/logo512.png"
+                name: "Trade-Islands Iced Tea",
+                price: "2,00 €",
+                imgsrc: "/img/trade-islands.jpg"
             },
             {
                 id: 2,
-                name: "Fritz",
-                price: "99€",
-                imgsrc: "/logo512.png"
+                name: "Bier 0,33l",
+                price: "1,00 €",
+                imgsrc: "/img/bier-klein.jpg"
+            },
+            {
+                id: 3,
+                name: "Bier 0,5l",
+                price: "2,00 €",
+                imgsrc: "/img/bier-gross.jpg"
             }
         ],
         users: [
@@ -47,9 +53,13 @@ class App extends Component {
             <Router>
                 <div className="App">
                     <Route exact path="/" render={props => (
+                      <React.Fragment>
+                        <h3>Produkte</h3>
                         <div className="row">
                             <ProductListing products={this.state.products}/>
                         </div>
+                      </React.Fragment>
+
                     )} />
                     <Route path="/users" render={props => (
                         <div className="row" >
