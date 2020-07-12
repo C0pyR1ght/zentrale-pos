@@ -5,6 +5,14 @@
     color: #101b40;
 }
 
+.navbar {
+    height: 60px;
+}
+
+hr {
+    margin-top: 0;
+}
+
 #wrapper {
     display: flex;
 }
@@ -54,6 +62,10 @@
 }
 
 .sidebar-brand-text {
+    height: 60px;
+    line-height: 60px;
+    letter-spacing: 0.2em;
+    font-size: 1.1em;
   text-transform: uppercase;
   font-weight: bolder;
   color: #101b40;
@@ -76,6 +88,15 @@
     margin-bottom: 15px;
     box-shadow: 0 32px 64px rgba(0,0,0,0.07);
     border-radius: 5px !important;
+}
+
+/* stats */
+.stats {
+    background-color: white;
+    width: 100%;
+    height: calc( 100% - 15px );
+    border-radius: 7px;
+    box-shadow: 0 32px 64px rgba(0,0,0,0.07);
 }
 
 /*  TODO in react components */

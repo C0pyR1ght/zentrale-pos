@@ -4,47 +4,27 @@ import './App.css';
 import ProductListing from './components/ProductListing';
 import UserListing from "./components/UserListing";
 import LastOrders from "./components/LastOrders";
-
+import axios from 'axios';
 
 class App extends Component {
 
     state = {
-        products: [
-            {
-                id: 0,
-                name: "Fritz-Getränke",
-                price: "1,50 €",
-                imgsrc: "/img/fritz-getraenke.jpg"
-            },
-            {
-                id: 1,
-                name: "Trade-Islands Iced Tea",
-                price: "2,00 €",
-                imgsrc: "/img/trade-islands.jpg"
-            },
-            {
-                id: 2,
-                name: "Bier 0,33l",
-                price: "1,00 €",
-                imgsrc: "/img/bier-klein.jpg"
-            },
-            {
-                id: 3,
-                name: "Bier 0,5l",
-                price: "2,00 €",
-                imgsrc: "/img/bier-gross.jpg"
-            }
-        ],
+        products: [],
         users: [
             {
                 id: 0,
                 name: "Lucas Böhm",
-                imgsrc: "/logo512.png"
+                imgsrc: "/img/avatars/avatar-lucas.png"
             },
             {
                 id: 1,
                 name: "Luca Feiser",
-                imgsrc: "/logo512.png"
+                imgsrc: "/img/avatars/avatar-luca.png"
+            },
+            {
+                id: 2,
+                name: "Gast",
+                imgsrc: "/img/avatars/avatar-standard.png"
             }
         ],
         orders: [
@@ -91,6 +71,12 @@ class App extends Component {
         ]
     }
 
+    componentDidMount() {
+        axios
+            .get('http://localhost:8000/api/products')
+            .then(res => this.setState({ products: res.data }));
+    }
+
     render() {
         return (
             <Router>
@@ -101,22 +87,30 @@ class App extends Component {
                           <div className="row productRow">
                             <ProductListing products={this.state.products}/>
                           </div>
-                          <h3 style={{marginTop: "20px"}}>Letzte Bestellungen</h3>
                           <div className="row">
                               <div className="col-md-6">
+                                  <h3 style={{marginTop: "20px"}}>Letzte Bestellungen</h3>
                                   <ul className="list-group">
                                     <LastOrders orders={this.state.orders} products={this.state.products} users={this.state.users}/>
                                   </ul>
                               </div>
-                              <div className="col-md-6"></div>
+                              <div className="col-md-6">
+                                  <h3 style={{marginTop: "20px"}}>Beliebteste</h3>
+                                  <div className="stats">
+                                      <p style={{ width: "100%", textAlign: "center", paddingTop: "50px", color: "#abafb8"}}>aktuell sind keine Daten verfügbar</p>
+                                  </div>
+                              </div>
                           </div>
                       </React.Fragment>
 
                     )} />
                     <Route path="/users" render={props => (
-                        <div className="row" >
-                            <UserListing users={this.state.users}/>
-                        </div>
+                        <>
+                            <h3>Verrechnungskonto auswählen</h3>
+                            <div className="row" >
+                                <UserListing users={this.state.users}/>
+                            </div>
+                        </>
                     )} />
                 </div>
             </Router>
