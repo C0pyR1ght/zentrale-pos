@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 class ProductListing extends Component {
     render() {
         return this.props.products.map((product) => (
-            <Product createOrder={this.props.createOrder} key={product.id} product={product} />
+            <Product setSelectedProductIdForOrdering={this.props.setSelectedProductIdForOrdering} key={product.id} product={product} />
         ));
     }
 }
 
 ProductListing.propTypes = {
     products: PropTypes.array.isRequired,
-    createOrder: PropTypes.func.isRequired
+    setSelectedProductIdForOrdering: PropTypes.func.isRequired
 };
 
 export default ProductListing;

@@ -6,20 +6,11 @@ class User extends Component {
     render() {
         const { id ,name, imgsrc } = this.props.user;
 
-        function createOrder(e) {
-          console.log(e);
-          e.preventDefault();
-          this.props.createOrder({
-            productid: this.props.selectedProductIdForOrdering,
-            userid: id
-          })
-        }
-
         return (
             <Link
               className="col-md-3"
               to="/"
-              onClick={createOrder}>
+              onClick={() => this.props.createOrder(id)}>
                 <div className="card">
                     <img src={ imgsrc } className="card-img-top" style={{ backgroundColor: "white" }} alt= { name } />
                         <div className="card-body">
@@ -34,7 +25,6 @@ class User extends Component {
 User.propTypes = {
     user: PropTypes.object.isRequired,
     createOrder: PropTypes.func.isRequired,
-    selectedProductIdForOrdering: PropTypes.number.isRequired
 };
 
 export default User;

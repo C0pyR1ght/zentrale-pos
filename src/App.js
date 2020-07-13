@@ -5,6 +5,7 @@ import ProductListing from './components/ProductListing';
 import UserListing from "./components/UserListing";
 import LastOrders from "./components/LastOrders";
 import axios from 'axios';
+import { store } from 'react-notifications-component';
 
 class App extends Component {
 
@@ -27,19 +28,44 @@ class App extends Component {
             .then(res => this.setState({ orders: res.data }));
     }
 
-    createNewOrder = order => {
+    createNewOrder = userid => {
       console.log("creating new order");
+
+      const order = {
+          productid: this.state.selectedProductIdForOrdering,
+          userid
+      };
+
       console.log(order);
+
       axios
         .post('http://localhost:8000/api/order/create', order)
         .then(res => {
-          this.setState({ orders: [...this.state.orders, res.data] })
+          this.setState({ orders: [...this.state.orders, res.data] });
         })
-    }
+        store.addNotification({
+            title: "Bestellung erfasst!",
+            message: "Bestellung wurde mit deinem Konto verrechnet",
+            type: "success",
+            insert: "top",
+            container: "top-le ft",
+            dismiss: {
+                duration: 5000,
+                onScreen: true
+            }
+        });
+
+
+    };
 
     setSelectedProductIdForOrdering = productId => {
-      this.setState({ selectedProductIdForOrdering: productId });
-    }
+        console.log("setSelectedProductIdForOrdering");
+        console.log(this.state.selectedProductIdForOrdering);
+        console.log(productId);
+        this.setState({ selectedProductIdForOrdering: productId }, () => {
+            console.log(this.state.selectedProductIdForOrdering);
+        });
+    };
 
     render() {
         return (
@@ -49,7 +75,7 @@ class App extends Component {
                       <React.Fragment>
                           <h3>Produkte</h3>
                           <div className="row productRow">
-                            <ProductListing createOrder={this.setSelectedProductIdForOrdering} products={this.state.products}/>
+                            <ProductListing setSelectedProductIdForOrdering={this.setSelectedProductIdForOrdering} products={this.state.products}/>
                           </div>
                           <div className="row">
                               <div className="col-md-6">
@@ -72,7 +98,7 @@ class App extends Component {
                         <>
                             <h3>Verrechnungskonto auswählen</h3>
                             <div className="row" >
-                                <UserListing selectedProductIdForOrdering={this.selectedProductIdForOrdering} createOrder={this.createNewOrder} users={this.state.users}/>
+                                <UserListing createOrder={this.createNewOrder} users={this.state.users}/>
                             </div>
                         </>
                     )} />
