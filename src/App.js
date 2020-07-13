@@ -10,71 +10,20 @@ class App extends Component {
 
     state = {
         products: [],
-        users: [
-            {
-                id: 0,
-                name: "Lucas Böhm",
-                imgsrc: "/img/avatars/avatar-lucas.png"
-            },
-            {
-                id: 1,
-                name: "Luca Feiser",
-                imgsrc: "/img/avatars/avatar-luca.png"
-            },
-            {
-                id: 2,
-                name: "Gast",
-                imgsrc: "/img/avatars/avatar-standard.png"
-            }
-        ],
-        orders: [
-            {
-                orderid: 0,
-                userid: 0,
-                productid: 0
-            },
-            {
-                orderid: 1,
-                userid: 1,
-                productid: 0
-            },
-            {
-                orderid: 2,
-                userid: 1,
-                productid: 2
-            },
-            {
-                orderid: 3,
-                userid: 1,
-                productid: 3
-            },
-            {
-                orderid: 4,
-                userid: 0,
-                productid: 0
-            },
-            {
-                orderid: 5,
-                userid: 1,
-                productid: 0
-            },
-            {
-                orderid: 6,
-                userid: 1,
-                productid: 2
-            },
-            {
-                orderid: 7,
-                userid: 1,
-                productid: 3
-            }
-        ]
+        users: [],
+        orders: []
     }
 
     componentDidMount() {
         axios
             .get('http://localhost:8000/api/products')
-            .then(res => this.setState({ products: res.data }));
+            .then(res => this.setState({ products: res.data }))
+        axios
+            .get('http://localhost:8000/api/users')
+            .then(res => this.setState({ users: res.data }));
+        axios
+            .get('http://localhost:8000/api/orders')
+            .then(res => this.setState({ orders: res.data }));
     }
 
     render() {
