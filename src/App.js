@@ -11,7 +11,8 @@ class App extends Component {
     state = {
         products: [],
         users: [],
-        orders: []
+        orders: [],
+        selectedProductIdForOrdering: null
     }
 
     componentDidMount() {
@@ -22,8 +23,22 @@ class App extends Component {
             .get('http://localhost:8000/api/users')
             .then(res => this.setState({ users: res.data }));
         axios
-            .get('http://localhost:8000/api/orders')
+            .get('http://localhost:8000/api/order/all')
             .then(res => this.setState({ orders: res.data }));
+    }
+
+    createNewOrder = order => {
+      console.log("creating new order");
+      console.log(order);
+      axios
+        .post('http://localhost:8000/api/order/create', order)
+        .then(res => {
+          this.setState({ orders: [...this.state.orders, res.data] })
+        })
+    }
+
+    setSelectedProductIdForOrdering = productId => {
+      this.setState({ selectedProductIdForOrdering: productId });
     }
 
     render() {
@@ -34,7 +49,7 @@ class App extends Component {
                       <React.Fragment>
                           <h3>Produkte</h3>
                           <div className="row productRow">
-                            <ProductListing products={this.state.products}/>
+                            <ProductListing createOrder={this.setSelectedProductIdForOrdering} products={this.state.products}/>
                           </div>
                           <div className="row">
                               <div className="col-md-6">
@@ -57,7 +72,7 @@ class App extends Component {
                         <>
                             <h3>Verrechnungskonto auswählen</h3>
                             <div className="row" >
-                                <UserListing users={this.state.users}/>
+                                <UserListing selectedProductIdForOrdering={this.selectedProductIdForOrdering} createOrder={this.createNewOrder} users={this.state.users}/>
                             </div>
                         </>
                     )} />

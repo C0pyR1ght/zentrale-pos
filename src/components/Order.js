@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 class Order extends Component {
     render() {
-        const { name, price, imgsrc } = this.props.product;
+        const { name, imgsrc } = this.props.product;
         return (
             <>
                 <li className="list-group-item">
