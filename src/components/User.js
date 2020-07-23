@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 
 class User extends Component {
     render() {
-        const { pos_account_id ,name, imgsrc } = this.props.user;
-
+        const { pos_account_id ,name, profile_picture } = this.props.user;
         return (
             <Link
               className="col-md-3"
               to="/"
               onClick={() => this.props.createOrder(pos_account_id)}>
                 <div className="card">
-                    <img src={ imgsrc } className="card-img-top" style={{ backgroundColor: "white" }} alt= { name } />
+                    <img src={ profile_picture } className="card-img-top" style={{ backgroundColor: "white" }} alt= { name } />
                         <div className="card-body">
                             <h5 className="card-title">{ name }</h5>
                         </div>

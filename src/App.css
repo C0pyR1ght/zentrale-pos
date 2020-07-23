@@ -23,9 +23,16 @@ hr {
     background-color: #ffffff;
 }
 
+#sidebar.active {
+    margin-left: -6.5rem;
+}
+
 @media (min-width: 768px) {
   .sidebar {
       width: 14rem!important;
+  }
+  #sidebar.active {
+      margin-left: -14rem!important;
   }
 }
 

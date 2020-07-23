@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Wrapper extends Component {
 
@@ -6,7 +7,7 @@ class Wrapper extends Component {
         return (
         <div id="wrapper">
             {/* Sidebar */}
-            <ul className="navbar-nav sidebar sidebar-dark">
+            <ul className="navbar-nav sidebar sidebar-dark active" id="sidebar">
                 {/* Sidebar - Brand */}
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                     <div className="sidebar-brand-text mx-3">Zentrale</div>
@@ -34,9 +35,9 @@ class Wrapper extends Component {
                 {/* Divider */}
                 <hr className="sidebar-divider d-none d-md-block" />
                 {/* Sidebar Toggler (Sidebar) */}
-                <div className="text-center d-none d-md-inline">
-                    <button className="rounded-circle border-0" id="sidebarToggle" />
-                </div>
+                  <div className="text-center d-none d-md-inline">
+                      <button className="rounded-circle border-0" id="sidebarToggle" />
+                  </div>
             </ul>
             {/* End of Sidebar */}
             {/* Content Wrapper */}
@@ -50,6 +51,14 @@ class Wrapper extends Component {
                         <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
                             <i className="fa fa-bars" />
                         </button>
+                        <button type="button" id="sidebarCollapse" className="btn">
+                            <i className="fas fa-align-left"></i>
+                        </button>
+                        <button type="button" id="backToMenu" className="btn">
+                            <i className="fas fa-chevron-left"></i>
+                            <span style={{ marginLeft: "10px" }}>Hauptmenü</span>
+                        </button>
+
                         {/* Topbar Navbar */}
                         <ul className="navbar-nav ml-auto">
                         </ul>

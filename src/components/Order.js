@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 class Order extends Component {
     render() {
+      console.log(this.props.product);
         const { name, imgsrc } = this.props.product;
         return (
             <>

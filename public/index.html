@@ -39,5 +39,13 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.js.</noscript>
     <div id="root"></div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $('#sidebarCollapse').on('click', function () {
+            console.log("toogle sidebar");
+              $('#sidebar').toggleClass('active');
+          });
+        });
+    </script>
   </body>
 </html>
