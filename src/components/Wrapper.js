@@ -10,9 +10,9 @@ class Wrapper extends Component {
             <ul className="navbar-nav sidebar sidebar-dark active" id="sidebar">
                 {/* Sidebar - Brand */}
                 <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-                    <div className="sidebar-brand-text mx-3">Zentrale</div>
+                    <img src="/pos-logo.png" height="30" style={{ height: "30px" }} className="sidebar-brand-text" />
                 </a>
-                {/* Divider */}
+                {/* Divider */ }
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item">
@@ -54,10 +54,12 @@ class Wrapper extends Component {
                         <button type="button" id="sidebarCollapse" className="btn">
                             <i className="fas fa-align-left"></i>
                         </button>
-                        <button type="button" id="backToMenu" className="btn">
-                            <i className="fas fa-chevron-left"></i>
-                            <span style={{ marginLeft: "10px" }}>Hauptmenü</span>
-                        </button>
+                        <Link to="/">
+                            <button type="button" id="backToMenu" className="btn">
+                                <i className="fas fa-chevron-left"></i>
+                                <span style={{ marginLeft: "10px" }}>Hauptmenü</span>
+                            </button>
+                        </Link>
 
                         {/* Topbar Navbar */}
                         <ul className="navbar-nav ml-auto">

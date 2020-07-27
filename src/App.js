@@ -10,15 +10,15 @@ import axios from 'axios';
 
 class App extends Component {
 
-    //apiBaseURL = 'https://api.zentrale-online.org';
-    apiBaseURL = 'http://localhost:8000';
+    apiBaseURL = 'https://api.zentrale-online.org';
+    //apiBaseURL = 'http://localhost:8000';
 
     state = {
         products: [],
         users: [],
         orders: [],
         selectedProductIdForOrdering: null
-    }
+    };
 
     componentDidMount() {
         axios
@@ -28,7 +28,7 @@ class App extends Component {
             .get(this.apiBaseURL + '/api/users')
             .then(res => this.setState({ users: res.data }));
         axios
-            .get(this.apiBaseURL + '/api/order/all')
+            .get(this.apiBaseURL + '/api/order/all?limit=10')
             .then(res => this.setState({ orders: res.data }));
     }
 
@@ -85,8 +85,8 @@ class App extends Component {
 
     render() {
         return (
-            <Wrapper>
-                <Router>
+            <Router>
+                <Wrapper>
                     <div className="App">
                         <Route exact path="/" render={props => (
                           <React.Fragment>
@@ -120,8 +120,8 @@ class App extends Component {
                             </>
                         )} />
                     </div>
-                </Router>
-            </Wrapper>
+                </Wrapper>
+            </Router>
         );
     }
 }

@@ -40,7 +40,6 @@ hr {
 #wrapper #content-wrapper {
     background-color: #f9fafe;
     width: 100%;
-    overflow-x: hidden;
 }
 .flex-column {
     flex-direction: column!important;
@@ -144,6 +143,14 @@ h3 {
 
 .card-body .card-text {
   color: #abafb8;
+}
+
+.sidebar-brand {
+    padding: 1.5rem 1rem;
+}
+
+.nav-item span {
+    margin-left: 10px;
 }
 
 .App a {
