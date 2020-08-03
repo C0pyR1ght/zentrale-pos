@@ -1,29 +1,52 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import axios from 'axios';
+import { store } from 'react-notifications-component';
 
 class Order extends Component {
+
+  deleteOrderConfirmModal = () => {
+    console.log("delete order");
+    confirmAlert({
+      title: 'Bestellung löschen',
+      message: 'Soll die Bestellung von ' + this.props.user.name + ' wirklich gelöscht werden?',
+      buttons: [
+        {
+          label: 'Löschen',
+          onClick: () => this.props.deleteOrder(this.props.product.pos_products_id),
+        },
+        {
+          label: 'Abrrechen',
+        }
+      ]
+    });
+  };
+
     render() {
-      console.log(this.props.product);
-        const { name, imgsrc } = this.props.product;
-        return (
-            <>
-                <li className="list-group-item">
-                    <div className="row">
-                        <div className="col-md-2">
-                            <span style={{ fontWeight: "bolder" }}>{ this.props.order.pos_order_id }</span>
-                            {/* <img src={ imgsrc } height="30px" style={{ borderRadius: "3px", marginLeft: "15px"}} alt= { name } /> */}
-                        </div>
-                        <span className="col-md-4"><b>{ this.props.user.name }</b></span>
-                        <span className="col-md-4" style={{color: "#abafb8"}}>{ this.props.product.name }</span>
-                        <span className="col-md-2" style={{color: "#abafb8"}}>{this.props.product.price }</span>
-                    </div>
-                </li>
-            </>
-        );
+      const { name, imgsrc } = this.props.product;
+      return (
+          <>
+              <li className="list-group-item">
+                  <div className="row">
+                      <span className="col-md-4"><b>{ this.props.user.name }</b></span>
+                      <span className="col-md-4" style={{color: "#abafb8"}}>{ this.props.product.name }</span>
+                      <span className="col-md-2" style={{color: "#abafb8"}}>{this.props.product.price }</span>
+                      <span className="col-md-2">
+                        <button className="btn" style={{float: "right"}} onClick={this.deleteOrderConfirmModal}>
+                          <i className="fas fa-minus-circle" style={{color: "#e74c3c"}}></i>
+                        </button>
+                      </span>
+                  </div>
+              </li>
+          </>
+      );
     }
 }
 
 Order.propTypes = {
+    deleteOrder: PropTypes.func.isRequired,
     order: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     product: PropTypes.object.isRequired
