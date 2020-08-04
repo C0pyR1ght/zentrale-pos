@@ -9,9 +9,15 @@ import Wrapper from "./components/Wrapper";
 import axios from 'axios';
 
 class App extends Component {
-
-    apiBaseURL = 'https://api.zentrale-online.org';
-    //apiBaseURL = 'http://localhost:8000';
+  constructor() {
+    super();
+    console.log("ENV: ", process.env.NODE_ENV);
+    if (process.env.NODE_ENV === 'production') {
+      this.apiBaseURL = 'https://api.zentrale-online.org';
+    } else {
+      this.apiBaseURL = 'http://localhost:8000';
+    }
+  }
 
     state = {
         products: [],
@@ -38,14 +44,9 @@ class App extends Component {
           pos_account_id
       };
 
-      console.log(order);
-
       axios
         .post(this.apiBaseURL + '/api/order/create', order)
         .then(res => {
-          console.log('order created');
-          console.log(this.state.orders);
-          console.log(res.data);
           this.setState({ orders: [...this.state.orders, res.data] });
             store.addNotification({
                 title: "Bestellung erfasst!",
@@ -74,6 +75,38 @@ class App extends Component {
       })
     };
 
+    deleteOrder = orderid => {
+      axios
+        .post(this.apiBaseURL + '/api/order/delete/' + orderid)
+        .then(res => {
+          this.setState({ orders: [...this.state.orders, res.data] });
+            store.addNotification({
+                title: "Bestellung gelöscht!",
+                message: "Die ausgewählte Bestellung wurde rückgängig gemacht",
+                type: "success",
+                insert: "top",
+                container: "bottom-center",
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+        }).catch(error => {
+          console.log(error);
+          store.addNotification({
+              title: "Ooops... Ein Fehler ist aufgetreten!",
+              message: error.message,
+              type: "danger",
+              insert: "top",
+              container: "bottom-center",
+              dismiss: {
+                  duration: 5000,
+                  onScreen: true
+              }
+          });
+      })
+    }
+
     setSelectedProductIdForOrdering = productId => {
         console.log("setSelectedProductIdForOrdering");
         console.log(this.state.selectedProductIdForOrdering);
@@ -98,7 +131,7 @@ class App extends Component {
                                   <div className="col-md-6">
                                       <h3 style={{marginTop: "20px"}}>Letzte Bestellungen</h3>
                                       <ul className="list-group">
-                                        <LastOrders orders={this.state.orders} products={this.state.products} users={this.state.users}/>
+                                        <LastOrders orders={this.state.orders} products={this.state.products} users={this.state.users} deleteOrder={this.deleteOrder}/>
                                       </ul>
                                   </div>
                                   <div className="col-md-6">
