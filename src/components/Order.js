@@ -8,14 +8,13 @@ import { store } from 'react-notifications-component';
 class Order extends Component {
 
   deleteOrderConfirmModal = () => {
-    console.log("delete order");
     confirmAlert({
       title: 'Bestellung löschen',
       message: 'Soll die Bestellung von ' + this.props.user.name + ' wirklich gelöscht werden?',
       buttons: [
         {
           label: 'Löschen',
-          onClick: () => this.props.deleteOrder(this.props.product.pos_products_id),
+          onClick: () => this.props.deleteOrder(this.props.order.pos_order_id),
         },
         {
           label: 'Abrrechen',

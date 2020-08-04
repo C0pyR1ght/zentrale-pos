@@ -9,15 +9,17 @@ import Wrapper from "./components/Wrapper";
 import axios from 'axios';
 
 class App extends Component {
-  constructor() {
-    super();
-    console.log("ENV: ", process.env.NODE_ENV);
-    if (process.env.NODE_ENV === 'production') {
-      this.apiBaseURL = 'https://api.zentrale-online.org';
-    } else {
-      this.apiBaseURL = 'http://localhost:8000';
+    constructor() {
+      super();
+      console.log("ENV: ", process.env.NODE_ENV);
+      if (process.env.NODE_ENV === 'production') {
+        this.apiBaseURL = 'https://api.zentrale-online.org';
+      } else {
+        this.apiBaseURL = 'http://localhost:8000';
+      }
     }
-  }
+
+    max_orders_displayed = 10;
 
     state = {
         products: [],
@@ -33,9 +35,13 @@ class App extends Component {
         axios
             .get(this.apiBaseURL + '/api/users')
             .then(res => this.setState({ users: res.data }));
-        axios
-            .get(this.apiBaseURL + '/api/order/all?limit=10')
-            .then(res => this.setState({ orders: res.data }));
+        this.getLastOrders();
+    }
+
+    getLastOrders() {
+      axios
+          .get(this.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
+          .then(res => this.setState({ orders: res.data }));
     }
 
     createNewOrder = pos_account_id => {
@@ -47,18 +53,26 @@ class App extends Component {
       axios
         .post(this.apiBaseURL + '/api/order/create', order)
         .then(res => {
-          this.setState({ orders: [...this.state.orders, res.data] });
-            store.addNotification({
-                title: "Bestellung erfasst!",
-                message: "und mit deinem Konto verrechnet",
-                type: "success",
-                insert: "top",
-                container: "bottom-center",
-                dismiss: {
-                    duration: 5000,
-                    onScreen: true
-                }
-            });
+          console.log(this.max_orders_displayed);
+          console.log(this.state.orders.slice(0, this.max_orders_displayed));
+          if (this.state.orders.length >= this.max_orders_displayed) {
+            this.setState({ orders: [res.data, ...this.state.orders.slice(0, this.max_orders_displayed - 1)] });
+            console.log(this.state.orders);
+          } else {
+            this.setState({ orders: [res.data, ...this.state.orders] });
+          }
+
+          store.addNotification({
+              title: "Bestellung erfasst!",
+              message: "und mit deinem Konto verrechnet",
+              type: "success",
+              insert: "top",
+              container: "bottom-center",
+              dismiss: {
+                  duration: 5000,
+                  onScreen: true
+              }
+          });
         }).catch(error => {
           console.log(error);
           store.addNotification({
@@ -79,7 +93,10 @@ class App extends Component {
       axios
         .post(this.apiBaseURL + '/api/order/delete/' + orderid)
         .then(res => {
-          this.setState({ orders: [...this.state.orders, res.data] });
+            this.setState({ orders: [... this.state.orders.filter(item => item.pos_order_id !== orderid)] });
+            axios
+                .get(this.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
+                .then(res => this.setState({ orders: res.data }));
             store.addNotification({
                 title: "Bestellung gelöscht!",
                 message: "Die ausgewählte Bestellung wurde rückgängig gemacht",
@@ -92,7 +109,6 @@ class App extends Component {
                 }
             });
         }).catch(error => {
-          console.log(error);
           store.addNotification({
               title: "Ooops... Ein Fehler ist aufgetreten!",
               message: error.message,
@@ -108,12 +124,7 @@ class App extends Component {
     }
 
     setSelectedProductIdForOrdering = productId => {
-        console.log("setSelectedProductIdForOrdering");
-        console.log(this.state.selectedProductIdForOrdering);
-        console.log(productId);
-        this.setState({ selectedProductIdForOrdering: productId }, () => {
-            console.log(this.state.selectedProductIdForOrdering);
-        });
+        this.setState({ selectedProductIdForOrdering: productId });
     };
 
     render() {
