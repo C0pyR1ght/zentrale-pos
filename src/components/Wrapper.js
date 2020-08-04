@@ -16,9 +16,11 @@ class Wrapper extends Component {
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item">
-                    <a className="nav-link" href="/">
+                    <Link to="/">
+                    <a className="nav-link">
                         <i className="fas fa-fw fa-tachometer-alt" />
                         <span>Dashboard</span></a>
+                    </Link>
                 </li>
                 {/* Divider */}
                 <hr className="sidebar-divider" />
@@ -28,9 +30,20 @@ class Wrapper extends Component {
                 </div>
                 {/* Nav Item - Charts */}
                 <li className="nav-item">
+                  <Link to="/">
                     <a className="nav-link" href="/">
                         <i className="fas fa-shopping-cart" />
-                        <span>Bestellen</span></a>
+                        <span>Bestellen</span>
+                      </a>
+                    </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/myaccountselection">
+                    <a className="nav-link" href="/">
+                        <i className="fas fa-user" />
+                        <span>Mein Konto</span>
+                      </a>
+                    </Link>
                 </li>
                 {/* Divider */}
                 <hr className="sidebar-divider d-none d-md-block" />

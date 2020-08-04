@@ -22,6 +22,7 @@ class App extends Component {
     max_orders_displayed = 10;
 
     state = {
+        selectedUser: null,
         products: [],
         users: [],
         orders: [],
@@ -93,7 +94,7 @@ class App extends Component {
       axios
         .post(this.apiBaseURL + '/api/order/delete/' + orderid)
         .then(res => {
-            this.setState({ orders: [... this.state.orders.filter(item => item.pos_order_id !== orderid)] });
+            this.setState({ orders: [...this.state.orders.filter(item => item.pos_order_id !== orderid)] });
             axios
                 .get(this.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
                 .then(res => this.setState({ orders: res.data }));
@@ -125,6 +126,10 @@ class App extends Component {
 
     setSelectedProductIdForOrdering = productId => {
         this.setState({ selectedProductIdForOrdering: productId });
+    };
+
+    setSelectedUser = selectedUser => {
+      this.setState({ selectedUser })
     };
 
     render() {
@@ -160,6 +165,22 @@ class App extends Component {
                                 <h3>Verrechnungskonto auswählen</h3>
                                 <div className="row" >
                                     <UserListing createOrder={this.createNewOrder} users={this.state.users}/>
+                                </div>
+                            </>
+                        )} />
+                        <Route path="/myaccountselection" render={props => (
+                            <>
+                                <h3>Dein Account auswählen</h3>
+                                <div className="row" >
+                                    <UserListing setSelectedUser={this.setSelectedUser} users={this.state.users}/>
+                                </div>
+                            </>
+                        )} />
+                      <Route path="/myaccount" render={props => (
+                            <>
+                                <h3>Hallo {this.state.users.find(e => e.pos_account_id === this.state.selectedUser).name}</h3>
+                                <div className="row" >
+                                    Kontostand X €
                                 </div>
                             </>
                         )} />
