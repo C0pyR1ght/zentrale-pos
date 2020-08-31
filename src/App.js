@@ -6,6 +6,7 @@ import ProductListing from './components/ProductListing';
 import UserListing from "./components/UserListing";
 import LastOrders from "./components/LastOrders";
 import Wrapper from "./components/Wrapper";
+import Accounting from "./components/Accounting";
 import axios from 'axios';
 
 class App extends Component {
@@ -13,9 +14,9 @@ class App extends Component {
       super();
       console.log("ENV: ", process.env.NODE_ENV);
       if (process.env.NODE_ENV === 'production') {
-        this.apiBaseURL = 'https://api.zentrale-online.org';
+        window.apiBaseURL = 'https://api.zentrale-online.org';
       } else {
-        this.apiBaseURL = 'http://localhost:8000';
+      window.apiBaseURL = 'http://localhost:8000';
       }
     }
 
@@ -26,22 +27,28 @@ class App extends Component {
         products: [],
         users: [],
         orders: [],
+        invoices: [],
         selectedProductIdForOrdering: null
     };
 
     componentDidMount() {
+
         axios
-            .get(this.apiBaseURL + '/api/products')
-            .then(res => this.setState({ products: res.data }))
+            .get(window.apiBaseURL + '/api/products')
+            .then(res => this.setState({ products: res.data }));
         axios
-            .get(this.apiBaseURL + '/api/users')
+            .get(window.apiBaseURL + '/api/users')
             .then(res => this.setState({ users: res.data }));
+        axios
+            .get(window.apiBaseURL + '/api/invoice/all')
+            .then(res => this.setState({ invoices: res.data }));
+
         this.getLastOrders();
     }
 
     getLastOrders() {
       axios
-          .get(this.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
+          .get(window.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
           .then(res => this.setState({ orders: res.data }));
     }
 
@@ -52,7 +59,7 @@ class App extends Component {
       };
 
       axios
-        .post(this.apiBaseURL + '/api/order/create', order)
+        .post(window.apiBaseURL + '/api/order/create', order)
         .then(res => {
           console.log(this.max_orders_displayed);
           console.log(this.state.orders.slice(0, this.max_orders_displayed));
@@ -77,7 +84,7 @@ class App extends Component {
         }).catch(error => {
           console.log(error);
           store.addNotification({
-              title: "Ooops... Ein Fehler ist aufgetreten!",
+              title: "Ooops... Bitte prüfe die Internetverbindung!",
               message: error.message,
               type: "danger",
               insert: "top",
@@ -92,11 +99,11 @@ class App extends Component {
 
     deleteOrder = orderid => {
       axios
-        .post(this.apiBaseURL + '/api/order/delete/' + orderid)
+        .post(window.apiBaseURL + '/api/order/delete/' + orderid)
         .then(res => {
             this.setState({ orders: [...this.state.orders.filter(item => item.pos_order_id !== orderid)] });
             axios
-                .get(this.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
+                .get(window.apiBaseURL + '/api/order/all?limit=' + this.max_orders_displayed)
                 .then(res => this.setState({ orders: res.data }));
             store.addNotification({
                 title: "Bestellung gelöscht!",
@@ -122,7 +129,7 @@ class App extends Component {
               }
           });
       })
-    }
+    };
 
     setSelectedProductIdForOrdering = productId => {
         this.setState({ selectedProductIdForOrdering: productId });
@@ -130,6 +137,48 @@ class App extends Component {
 
     setSelectedUser = selectedUser => {
       this.setState({ selectedUser })
+    };
+
+    setInvoiceStatus = status => {
+        console.log("setstatus ", status);
+        const sendStatus = {
+            status: status.value
+        };
+
+        axios
+            .post(window.apiBaseURL + '/api/invoice/'+ status.invoiceid +'/status', sendStatus)
+            .then(res => {
+
+                var modifedInvoices = [ ...this.state.invoices ];
+                modifedInvoices.find(element => )
+
+                this.setState({ invoices: [...this.state.invoices ] })
+
+                store.addNotification({
+                    title: "Status gesetzt!",
+                    message: "Rechnung wurde als " + status.value + " markiert",
+                    type: "success",
+                    insert: "top",
+                    container: "bottom-center",
+                    dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                    }
+                });
+            }).catch(error => {
+            console.log(error);
+            store.addNotification({
+                title: "Ooops... Bitte prüfe die Internetverbindung!",
+                message: error.message,
+                type: "danger",
+                insert: "top",
+                container: "bottom-center",
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
+        })
     };
 
     render() {
@@ -180,9 +229,18 @@ class App extends Component {
                             <>
                                 <h3>Hallo {this.state.users.find(e => e.pos_account_id === this.state.selectedUser).name}</h3>
                                 <div className="row" >
-                                    Kontostand X €
+                                    <div className="card" style={{ width: "18rem" }}>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Saldo</h5>
+                                            <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                            <p className="card-text">{this.state.users.find(e => e.pos_account_id === this.state.selectedUser).saldo} €</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </>
+                        )} />
+                        <Route path="/accounting" render={props => (
+                            <Accounting setInvoiceStatus={this.setInvoiceStatus} invoices={this.state.invoices} />
                         )} />
                     </div>
                 </Wrapper>

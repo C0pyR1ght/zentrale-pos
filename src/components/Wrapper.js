@@ -45,6 +45,21 @@ class Wrapper extends Component {
                       </a>
                     </Link>
                 </li>
+
+                <hr className="sidebar-divider" />
+                {/* Heading */}
+                <div className="sidebar-heading">
+                    Getränke
+                </div>
+                <li className="nav-item">
+                    <Link to="/accounting">
+                        <a className="nav-link" href="/">
+                            <i className="fas fa-calculator" />
+                            <span>Buchhaltung</span>
+                        </a>
+                    </Link>
+                </li>
+
                 {/* Divider */}
                 <hr className="sidebar-divider d-none d-md-block" />
                 {/* Sidebar Toggler (Sidebar) */}
