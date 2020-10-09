@@ -156,3 +156,6 @@ h3 {
 .App a {
   text-decoration: none;
 }
+.overdue {
+    background-color: #d63031;
+}

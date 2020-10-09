@@ -20,15 +20,23 @@ class Invoice extends Component {
             { value: 'bar', label: 'Barzahlung' }
         ];
       const { invoice_number, recipient, amount, status, date, due_date } = this.props.invoice;
+
+      let parsedDate = new Date(Date.parse(date));
+      let displayDate = parsedDate.toLocaleDateString("de-DE");
+      let parsedDueDate = new Date(Date.parse(due_date));
+      let displayDueDate = parsedDueDate.toLocaleDateString("de-DE");
+
+      let overdue = status === 'offen' && parsedDueDate - Date.parse(new Date()) < 0;
+
       return (
           <>
-              <li className="list-group-item">
+              <li className={`list-group-item ${overdue ? "overdue" : ""}`}>
                   <div className="row">
                       <span className="col-md-2" style={{color: "#abafb8"}}>ZENTRALE- { invoice_number }</span>
                       <span className="col-md-3"><b>{ recipient }</b></span>
                       <span className="col-md-1" style={{color: "#abafb8"}}>{ amount } €</span>
-                      <span className="col-md-2" style={{color: "#abafb8"}}>{ date }</span>
-                      <span className="col-md-2" style={{color: "#abafb8"}}>{ due_date }</span>
+                      <span className="col-md-2" style={{color: "#abafb8"}}>{ displayDate }</span>
+                      <span className="col-md-2" style={{color: "#abafb8"}}>{ displayDueDate }</span>
                       <span className="col-md-2" style={{color: "#abafb8"}}>
                           <Select
                               options={options}
