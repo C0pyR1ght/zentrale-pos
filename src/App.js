@@ -235,7 +235,7 @@ class App extends Component {
                             <>
                                 <h3>Hallo {this.state.users.find(e => e.pos_account_id === this.state.selectedUser).name}</h3>
                                 <div className="row" >
-                                    <div className="card" style={{ width: "18rem" }}>
+                                    <div className="card" id="saldo-card" style={{ width: "18rem" }}>
                                         <div className="card-body">
                                             <h5 className="card-title">Saldo</h5>
                                             <h6 className="card-subtitle mb-2 text-muted">Dein offener Rechnungsbetrag:</h6>
