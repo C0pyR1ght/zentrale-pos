@@ -15,8 +15,9 @@ class Invoice extends Component {
 
     render() {
         const options = [
-            { value: 'offen', label: 'offen' },
-            { value: 'bezahlt', label: 'bezahlt' }
+            { value: 'offen', label: 'Offen' },
+            { value: 'paypal', label: 'PayPal' },
+            { value: 'bar', label: 'Barzahlung' }
         ];
       const { invoice_number, recipient, amount, status } = this.props.invoice;
       return (
@@ -30,7 +31,7 @@ class Invoice extends Component {
                       <span className="col-md-2" style={{color: "#abafb8"}}>
                           <Select
                               options={options}
-                              value={options.filter(option => option.label === status)}
+                              value={options.filter(option => option.value === status)}
                               onChange={value => this.setInvoiceStatus(value)}
                           />
                       </span>
