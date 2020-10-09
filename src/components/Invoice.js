@@ -9,7 +9,7 @@ import Select from 'react-select'
 class Invoice extends Component {
 
     setInvoiceStatus = status => {
-        status.invoiceid = this.props.invoice_number;
+        status.invoiceid = this.props.invoice.invoice_number;
         this.props.setInvoiceStatus(status);
     };
 
@@ -19,15 +19,16 @@ class Invoice extends Component {
             { value: 'paypal', label: 'PayPal' },
             { value: 'bar', label: 'Barzahlung' }
         ];
-      const { invoice_number, recipient, amount, status } = this.props.invoice;
+      const { invoice_number, recipient, amount, status, date, due_date } = this.props.invoice;
       return (
           <>
               <li className="list-group-item">
                   <div className="row">
                       <span className="col-md-2" style={{color: "#abafb8"}}>ZENTRALE- { invoice_number }</span>
-                      <span className="col-md-4"><b>{ recipient }</b></span>
-                      <span className="col-md-2" style={{color: "#abafb8"}}>{ amount } €</span>
-                      <span className="col-md-2" style={{color: "#abafb8"}}>{ status }</span>
+                      <span className="col-md-3"><b>{ recipient }</b></span>
+                      <span className="col-md-1" style={{color: "#abafb8"}}>{ amount } €</span>
+                      <span className="col-md-2" style={{color: "#abafb8"}}>{ date }</span>
+                      <span className="col-md-2" style={{color: "#abafb8"}}>{ due_date }</span>
                       <span className="col-md-2" style={{color: "#abafb8"}}>
                           <Select
                               options={options}

@@ -149,12 +149,16 @@ class App extends Component {
             .post(window.apiBaseURL + '/api/invoice/'+ status.invoiceid +'/status', sendStatus)
             .then(res => {
 
-                var modifedInvoices = [ ...this.state.invoices ];
-                modifedInvoices.find(element => {
-                    console.log(element);
-                });
+                var modifyedInvoices = [ ...this.state.invoices ];
+                console.log(modifyedInvoices);
 
-                this.setState({ invoices: [...this.state.invoices ] })
+                let modifyedInvoiceindex = modifyedInvoices.findIndex(element => element.invoice_number === status.invoiceid);
+                console.log(modifyedInvoiceindex);
+                console.log("hallo");
+
+                modifyedInvoices[modifyedInvoiceindex].status = status.value;
+
+                this.setState({ invoices: [...modifyedInvoices ] });
 
                 store.addNotification({
                     title: "Status gesetzt!",
