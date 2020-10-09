@@ -150,7 +150,9 @@ class App extends Component {
             .then(res => {
 
                 var modifedInvoices = [ ...this.state.invoices ];
-                modifedInvoices.find(element => )
+                modifedInvoices.find(element => {
+                    console.log(element);
+                });
 
                 this.setState({ invoices: [...this.state.invoices ] })
 
@@ -232,7 +234,7 @@ class App extends Component {
                                     <div className="card" style={{ width: "18rem" }}>
                                         <div className="card-body">
                                             <h5 className="card-title">Saldo</h5>
-                                            <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                            <h6 className="card-subtitle mb-2 text-muted">Dein offener Rechnungsbetrag:</h6>
                                             <p className="card-text">{this.state.users.find(e => e.pos_account_id === this.state.selectedUser).saldo} €</p>
                                         </div>
                                     </div>
