@@ -157,6 +157,10 @@ h3 {
   text-decoration: none;
 }
 
+.overdue {
+    background-color: #d63031;
+}
+
 #saldo-card {
     background-color: white;
     border-radius: 5px;
