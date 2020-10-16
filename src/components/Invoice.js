@@ -40,11 +40,16 @@ class Invoice extends Component {
                       <span className="col-md-2" style={{color: "#abafb8"}}>{ displayDate }</span>
                       <span className="col-md-2" style={{color: "#abafb8"}}>{ displayDueDate }</span>
                       <span className="col-md-2" style={{color: "#abafb8"}}>
+                          { this.props.setInvoiceStatus &&
                           <Select
                               options={options}
                               value={options.filter(option => option.value === status)}
                               onChange={value => this.setInvoiceStatus(value)}
                           />
+                          }
+                          { !this.props.setInvoiceStatus &&
+                          <b>{ options.find(element => element.value === status).label }</b>
+                          }
                       </span>
                   </div>
               </li>

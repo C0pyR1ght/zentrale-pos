@@ -19,7 +19,7 @@ class Invoices extends Component {
 
 Invoices.propTypes = {
     invoices: PropTypes.array.isRequired,
-    setInvoiceStatus: PropTypes.func.isRequired
+    setInvoiceStatus: PropTypes.func
 };
 
 export default Invoices;
