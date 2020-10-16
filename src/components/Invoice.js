@@ -19,6 +19,7 @@ class Invoice extends Component {
             { value: 'paypal', label: 'PayPal' },
             { value: 'bar', label: 'Barzahlung' }
         ];
+
       const { invoice_number, recipient, amount, status, date, due_date } = this.props.invoice;
 
       let parsedDate = new Date(Date.parse(date));
@@ -27,10 +28,11 @@ class Invoice extends Component {
       let displayDueDate = parsedDueDate.toLocaleDateString("de-DE");
 
       let overdue = status === 'offen' && parsedDueDate - Date.parse(new Date()) < 0;
+      let tobepayed = overdue === false && status === 'offen';
 
       return (
           <>
-              <li className={`list-group-item ${overdue ? "overdue" : ""}`}>
+              <li className={`list-group-item ${overdue ? "overdue" : ""} ${tobepayed ? "tobepayed" : ""}`}>
                   <div className="row">
                       <span className="col-md-2" style={{color: "#abafb8"}}>ZENTRALE- { invoice_number }</span>
                       <span className="col-md-3"><b>{ recipient }</b></span>
