@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Invoices from "./Invoices";
 import PropTypes from 'prop-types';
+import {store} from "react-notifications-component";
 
 
 
@@ -27,7 +28,19 @@ class Accounting extends Component {
             setTimeout(function(){
                 that.setState({isAdmin: false});
                 that.setState({value: ""});
-            }, 30000) // auto logout after 30 minuts
+            }, 30000) // auto logout after 30 minutes
+        } else {
+            store.addNotification({
+                title: "Ooops... Falsches Passwort!",
+                message: "Bitte gebe dein Passwort erneut ein.",
+                type: "danger",
+                insert: "top",
+                container: "bottom-center",
+                dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                }
+            });
         }
     }
 
