@@ -246,7 +246,7 @@ class App extends Component {
                       <Route path="/myaccount" render={props => (
                             <>
                                 <h3>Hallo {this.state.users.find(e => e.pos_account_id === this.state.selectedUser).name}</h3>
-                                <div className="row" >
+                                <div className="row" style={{marginBottom: "30px"}}>
                                     <div className="card" id="saldo-card" style={{ width: "18rem" }}>
                                         <div className="card-body">
                                             <h5 className="card-title">Saldo</h5>
@@ -254,7 +254,15 @@ class App extends Component {
                                             <p className="card-text">{this.state.users.find(e => e.pos_account_id === this.state.selectedUser).saldo} €</p>
                                         </div>
                                     </div>
+                                    <div className="card" id="saldo-card" style={{ width: "18rem" }}>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Umsatz</h5>
+                                            <h6 className="card-subtitle mb-2 text-muted">Dein gesamter Umsatz:</h6>
+                                            <p className="card-text">{this.state.users.find(e => e.pos_account_id === this.state.selectedUser).umsatz} €</p>
+                                        </div>
+                                    </div>
                                 </div>
+                                <Invoices invoices={this.state.users.find(e => e.pos_account_id === this.state.selectedUser).invoices} />
                             </>
                         )} />
                         <Route path="/accounting" render={props => (
