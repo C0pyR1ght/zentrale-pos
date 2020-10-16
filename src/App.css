@@ -111,9 +111,11 @@ h3 {
   margin-bottom: 20px;
 }
 
-.productRow:first-child {
-    margin-left: 0;
-    background-color: rebeccapurple;
+.productRow .col-md-3:first-child {
+    padding-left: 0px;
+}
+.productRow .col-md-3:last-child {
+    padding-right: 0px;
 }
 
 .card {
