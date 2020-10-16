@@ -8,6 +8,8 @@ import LastOrders from "./components/LastOrders";
 import Wrapper from "./components/Wrapper";
 import Accounting from "./components/Accounting";
 import axios from 'axios';
+import Invoices from "./components/Invoices";
+import { PieChart } from 'react-minimal-pie-chart';
 
 class App extends Component {
     constructor() {
@@ -28,6 +30,7 @@ class App extends Component {
         users: [],
         orders: [],
         invoices: [],
+        stats: [],
         selectedProductIdForOrdering: null
     };
 
@@ -42,6 +45,9 @@ class App extends Component {
         axios
             .get(window.apiBaseURL + '/api/invoice/all')
             .then(res => this.setState({ invoices: res.data }));
+        axios
+            .get(window.apiBaseURL + '/api/stats')
+            .then(res => this.setState({ stats: res.data }));
 
         this.getLastOrders();
     }
@@ -206,9 +212,15 @@ class App extends Component {
                                       </ul>
                                   </div>
                                   <div className="col-md-6">
-                                      <h3 style={{marginTop: "20px"}}>Beliebteste</h3>
+                                      <h3 style={{marginTop: "20px"}}>Beliebteste Getränke</h3>
                                       <div className="stats">
-                                          <p style={{ width: "100%", textAlign: "center", paddingTop: "50px", color: "#abafb8"}}>aktuell sind keine Daten verfügbar</p>
+                                          <PieChart
+                                              style={{width: "50%", margin: "20 auto", display: "block"}}
+                                              data={this.state.stats}
+                                              labelStyle={{ fontSize: "5px"}}
+                                              labelPosition={70}
+                                              label={({ dataEntry }) => dataEntry.title}
+                                          />
                                       </div>
                                   </div>
                               </div>
