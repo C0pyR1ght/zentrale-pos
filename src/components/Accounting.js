@@ -26,9 +26,10 @@ class Accounting extends Component {
             this.setState({isAdmin: true});
             const that = this;
             setTimeout(function(){
+                console.log("auto logout");
                 that.setState({isAdmin: false});
                 that.setState({value: ""});
-            }, 30000) // auto logout after 30 minutes
+            }, 1800000) // auto logout after 30 minutes
         } else {
             store.addNotification({
                 title: "Ooops... Falsches Passwort!",
