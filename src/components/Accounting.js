@@ -4,40 +4,40 @@ import PropTypes from 'prop-types';
 import { store } from "react-notifications-component";
 
 
-const Accounting = () => {
-    const [isAdmin, setAdmin] = useState(false);
+// const Accounting = () => {
+//     const [isAdmin, setAdmin] = useState(false);
 
 
-    if ( isAdmin ) {
-        return <AdminDashboard />
-    } else {
-        return <AdminLogin/>
-    }
-}
+//     if ( isAdmin ) {
+//         return <AdminDashboard />
+//     } else {
+//         return <AdminLogin/>
+//     }
+// }
 
 
-const AdminDashboard = () => {
-    if (invoices?.length > 0) {
-        return (
-            <Invoices setInvoiceStatus={ setInvoiceStatus } invoices={ invoices } />
-        );
-    } else {
-        return <h3>keine Rechnungen gefunden</h3>;
-    }
-}
+// const AdminDashboard = () => {
+//     if (invoices?.length > 0) {
+//         return (
+//             <Invoices setInvoiceStatus={ setInvoiceStatus } invoices={ invoices } />
+//         );
+//     } else {
+//         return <h3>keine Rechnungen gefunden</h3>;
+//     }
+// }
 
-const AdminLogin = () => {
+// const AdminLogin = () => {
 
-    return (
-        <div className={"card login-card"} style={{width: "18rem"}}>
-            <h3>Anmelden</h3>
-            <form onSubmit={this.handleSubmit}>
-                <input className={"form-control"} type="password" value={this.state.value} onChange={this.handleChange} />
-                <input type="submit" className={"btn btn-primary"} style={{marginTop: "10px"}} value="Anmelden" />
-            </form>
-        </div>
-    );
-}
+//     return (
+//         <div className={"card login-card"} style={{width: "18rem"}}>
+//             <h3>Anmelden</h3>
+//             <form onSubmit={this.handleSubmit}>
+//                 <input className={"form-control"} type="password" value={this.state.value} onChange={this.handleChange} />
+//                 <input type="submit" className={"btn btn-primary"} style={{marginTop: "10px"}} value="Anmelden" />
+//             </form>
+//         </div>
+//     );
+// }
 class Accounting extends Component {
     constructor(props) {
         super(props);
