@@ -1,7 +1,7 @@
+// import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { store } from 'react-notifications-component';
-import './App.css';
 import ProductListing from './components/ProductListing';
 import UserListing from "./components/UserListing";
 import LastOrders from "./components/LastOrders";

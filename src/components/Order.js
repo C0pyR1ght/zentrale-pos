@@ -1,7 +1,7 @@
+// import 'react-confirm-alert/src/react-confirm-alert.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import axios from 'axios';
 import { store } from 'react-notifications-component';
 

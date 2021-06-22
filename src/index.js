@@ -1,18 +1,18 @@
+// import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactNotification from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-      <ReactNotification />
-      <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export default function NextIndexWrapper() {
+  return (
+    <React.StrictMode>
+        <ReactNotification />
+        <App />
+    </React.StrictMode>
+  );
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
