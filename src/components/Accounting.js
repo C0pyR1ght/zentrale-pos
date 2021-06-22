@@ -1,10 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Invoices from "./Invoices";
 import PropTypes from 'prop-types';
-import {store} from "react-notifications-component";
+import { store } from "react-notifications-component";
 
 
+const Accounting = () => {
+    const [isAdmin, setAdmin] = useState(false);
 
+
+    if ( isAdmin ) {
+        return <AdminDashboard />
+    } else {
+        return <AdminLogin/>
+    }
+}
+
+
+const AdminDashboard = () => {
+    if (invoices?.length > 0) {
+        return (
+            <Invoices setInvoiceStatus={ setInvoiceStatus } invoices={ invoices } />
+        );
+    } else {
+        return <h3>keine Rechnungen gefunden</h3>;
+    }
+}
+
+const AdminLogin = () => {
+
+    return (
+        <div className={"card login-card"} style={{width: "18rem"}}>
+            <h3>Anmelden</h3>
+            <form onSubmit={this.handleSubmit}>
+                <input className={"form-control"} type="password" value={this.state.value} onChange={this.handleChange} />
+                <input type="submit" className={"btn btn-primary"} style={{marginTop: "10px"}} value="Anmelden" />
+            </form>
+        </div>
+    );
+}
 class Accounting extends Component {
     constructor(props) {
         super(props);
